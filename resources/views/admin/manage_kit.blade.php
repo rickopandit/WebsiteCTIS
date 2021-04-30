@@ -1,0 +1,94 @@
+@extends('layouts.master')
+
+@section('title')
+    CTIS | Manage Test Kit Stock 
+@endsection
+
+
+@section('content')
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Manage Test Kit</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/save-kit" method="POST">
+      {{csrf_field()}}
+      <div class="modal-body">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Test Name: </label>
+            <input type="text" name="testName" class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Status: </label>
+            <input type="text" name="status" class="form-control" id="recipient-name">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="row">
+<div class="col-md-12">
+  <div class="card" >
+    <div class="card-header">
+      <h4 class="card-title">Manage Test Kit
+      <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">Add</button>
+      </h4>
+      @if (session('status'))
+      <div class="alert alert-success" role="alert">
+        {{ session('status')}}
+      </div>
+      @endif
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead class=" text-primary">
+            <th>
+              Kit ID
+            </th>
+            <th>
+              Test Name
+            </th>
+            <th>
+              Status
+            </th>
+            <th>
+              Edit
+            </th>
+          </thead>
+          <tbody>
+          @foreach ($manage_kit as $data)
+            <tr>
+              <td>
+                {{$data->id}}
+              </td>
+              <td>
+                {{$data->testName}}
+              </td>
+              <td>
+                {{$data->status}}
+              </td>
+              <td>
+              <a href="/kit-edit/{{$data->id}}" class="btn btn-success">Edit</a>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+
+
+@section('script')
+
+@endsection
